@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE←edge">
+    <meta name="viewport" content="width←device-width, initial-scale←1.0">
+    <title>Bubble Sort</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: 1px solid black;
+            padding: 1em;
+        }
+
+        table.fill-in {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table.fill-in td, table.fill-in th {
+            border: 1px solid black;
+        }
+
+        table.fill-in td {
+            padding: 1em;
+        }
+
+        .important {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: red;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css" integrity="sha512-xIf9AdJauwKIVtrVRZ0i4nHP61Ogx9fSRAkCLecmE2dL/U8ioWpDvFCAy4dcfecN72HHB9+7FfQj3aiO68aaaw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/lint/lint.min.css" integrity="sha512-6Owk90V+dmnBh35Q/OWxqfmLXExGMWDwb7tijRebrz7lLkDxZ7RS+eiNQmpUPrlWtpQulb/BkatkyPwPkMhpUQ==" crossorigin="anonymous" />
+</head>
+<body>
+    <h1>Bubble Sort</h1>
+    <p>Today you will be completing this handout to learn basic Psuedocode. The objective of the handout is to implement the bubble sort algorithim which will sort a list in place. What is a list? What does 'in place' mean? We will find out. At the end of this lesson you <strong class="important">will be submitting a zip file containing your work</strong>.</p>
+    <!-- What is Bubble Sort -->
+    <h2>What is Bubble Sort?</h2>
+    <p>
+        It is a <em>sorting</em> algorithim. A sorting algorithim takes a collection of items and then orders the items. Consider an incomplete implementation of the bubble sort function below:
+    </p>
+    <pre>
+// Takes a collection of items and sorts them.
+Function BubbleSort(Items)
+        ...
+End Function
+    </pre>
+    <p>
+        If we called <code>BubbleSort</code> with the list <code>[5,2,3,1]</code> we would end up with the sorted list <code>[1,2,3,5]</code>. But how does bubble sort work? Here is my brief explanation and a visualization:
+    </p>
+    <p>
+        Bubble sort works by going over each <em>pair</em> of <em>neighbouring</em> items in a list (the red boxes). If the item on the left is </em>greater</em> than the item on the right, the items swap spots. We repeat this process until we go over the whole list without swapping the items of any pair.
+    </p>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" />
+    <p>
+        Now, your task is to produce an <strong>ordered sequence of instructions</strong> (sounds like the definition of a program...) which describe how to perform a bubble sort using your own words. <span class="important">Save this sequence of instructions as a <em>text</em> file named "instructions.txt" and include it in your zip file.</span> Your sequence of instructions should look something like this:
+    </p>
+    <ol>
+        <li>Look at first pair in list, ...</li>
+        <li>..., swap if left item is greater than right item.</li>
+        <li>If ... stop. Otherwise, ...</li>
+    </ol>
+    <p>If you need a bit more help, why not watch this video:</p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/6Gv8vg0kcHc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <h2>Psuedocode Langague</h2>
+    <p>
+        If we want to write our bubble sort algorithim in pseduocode, we must first know the syntax for the pseudocode language. The following table describes the language elements you'll need to know.
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th style="width: 20%">Syntax</th>
+                <th>Description</th>
+                <th style="width: 50%">Examples</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Assignment</td>
+                <td><code>:variable-name: ← :value:</code></td>
+                <td>Either declares (declaring is kind of like 'creating'), OR redefines a variable named <code>variable-name</code> with the value <code>value</code>.</td>
+                <td>
+                    <ul>
+                        <li><code>Name ← "Mr. Hollingworth"</code></li>
+                        <li><code>Age ← Age + 1</code></li>
+                        <li><code>Interest ← (Principal - Payments) * InterestRate</code></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>Function Definition</td>
+                <td>
+<pre>
+Function :function-name:(:parameter-list:)
+    :body:
+End Function
+</pre>
+                </td>
+                <td>Declares a function with the the name <code>function-name</code> which accepts one or more paramter.</td>
+                <td>
+<pre>
+Function AddOne(Number)
+    AddOne ← Number + 1 // Assigning to the name of the function returns a value.
+End Function
+</pre>
+<pre>
+Function Distance(A, B)
+    Distance ← Sqrt((A.X - B.x)^2 + (A.Y - B.Y)^2)
+End Function
+</pre>
+                </td>
+            </tr>
+            <tr>
+                <td>Selection</td>
+                <td>
+<pre>
+If :condition: Then
+    :body:
+End If
+</pre>
+                </td>
+                <td>Execute the code in <code>body</code> if <code>condition</code> is true. You can have multiple 'sub conditions' in <code>condition</code> by using the words <code>And</code> or <code>Or</code> (see examples).</td>
+                <td>
+<pre>
+If X &lt; Y Then
+    Output("X is less than Y")
+End If
+
+If CookieAvailable And IsNotAllergic Then
+    EatCookie()
+EndIf
+
+If FailedToHandIn Or Grade &lt; 50 Then
+    Output("Sorry you failed the assignment")
+End If
+</pre>
+                </td>
+            </tr>
+            <tr>
+                <td>Pre-Test Loop</td>
+                <td>
+<pre>
+While :condition: Do
+    :body:
+End While
+</pre>
+                </td>
+                <td>
+                    Repeatedly execute the code in <code>body</code> as long as <code>condition</code> is true. 
+                </td>
+                <td>
+<pre>
+Count ← 5
+While Count >= 1 Do
+    Output("Still counting down!")
+    Count ← Count - 1
+End While
+</pre>
+                </td>
+            </tr>
+            <tr>
+                <td>Counted Loop</td>
+                <td>
+<pre>
+For :variable: ← :start: ... :end: Do
+    :body:
+End For
+</pre>
+                </td>
+                <td>
+                    Execute the code in <code>body</code> once for each number between <code>start</code> and <code>end</code>. Each time the code in <code>body</code> is executed <code>variable</code> will have a different value.
+                </td>
+                <td>
+<pre>
+// The following loop would output the following to the screen:
+// 1 multiplied by 5 equals 5
+// 2 multiplied by 5 equals 10
+// 3 multiplied by 5 equals 15
+For N ← 1 ... 3 Do
+    Output(N, " multiplied by 5 equals", N * 5)
+End For
+</pre>
+                </td>
+            </tr>
+            <tr>
+                <td>List</td>
+                <td>
+                    <pre>[...]</pre>
+                    <pre>List.Remove(Position)</pre>
+                    <pre>List.Get(Position)</pre>
+                    <pre>List.Set(Position, Item)</pre>
+                    <pre>List.Add(Item)</pre>
+                    <pre>List.Length()</pre>
+                </td>
+                <td>A list is a collection of items. A list will often be assigned to a variable. Each list has various <em>methods</em> (kind of like functions) which modify the list.</td>
+                <td>
+<pre>
+Numbers ← []
+Numbers.Add(5)  // Numbers is now [5]
+Numbers.Add(2)  // Numbers is now [5, 2]
+Numbers.Set(1, 3)  // Numbers is now [3, 2]
+FirstItem ← Numbers.Get(1)  // FirstItem would have the value 3
+SecondItem ← Numbers.Get(2)  // SecondItem would have the value 2
+Numbers.Add(7)  // Numbers is now [3, 2, 7]
+Numbers.Add(8)  // Numbers is now [3, 2, 7, 8]
+NumberOfItems ← Numbers.Length()  // NumberOfItems would have value 4
+Numbers.Remove(1)  // Numbers is now [2, 7, 8]
+</pre>                    
+                </td>
+            </tr>
+            <tr>
+                <td>Input</td>
+                <td><code>Input(:variable:)</code></td>
+                <td>Asks the user to enter a value for variable <code>variable</code>. Users can enter numbers, text or even lists of values.</td>
+                <td>
+                    <pre>Input(Name)</pre>
+                    <pre>Input(Age)</pre>
+                    <pre>Input(ListOfNames)</pre>
+                </td>
+            </tr>
+            <tr>
+                <td>Output</td>
+                <td><code>Output(:values:)</code></td>
+                <td>Print out a series of values to the screen.</td>
+                <td>
+                    <pre>Output("Hello", Name)</pre>
+                    <pre>Output("Good job!")</pre>
+                    <pre>Output(Numbers)</pre>
+                    <pre>Output(1, 2, 3, 4, 5)</pre>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4>Psuedocode Warmup</h4>
+    <p>Have a go at writing a program for the following questions. You should be able to devise a solution using only the constructs listed in the table above.</p>
+    <ol>
+        <li>Write a program which declares three variables <code>X</code>, <code>Y</code> and <code>Z</code> with different prime number values.</li>
+        <li>Write a <strong>single</strong> line of code which assigns to variable <code>X</code> the value <code>X + 1</code>.</li>
+        <li>Write a program which declares three variables <code>X</code>, <code>Y</code> and <code>Z</code> and then <strong>outputs</strong> the smallest value.</li>
+        <li>Write a program which declares three variables <code>X</code>, <code>Y</code> and <code>Z</code> and then <strong>outputs</strong> the <strong>name</strong> of the variable which has the smallest value. For example, if X had the smallest value (say 5) it should output "X had the smallest value which was 5".</li>
+        <li>Write a program which prints out all the whole numbers between 1 and 1000.</li>
+        <li>Write a program which asks the user for a list of numbers (store this list in a variable called <code>Numbers</code>) and then output the number of values they entered (i.e. the length of the list).</li>
+        <li>Modify the program from the previous exercise to compute the sum of all numbers in the list and output it with the message like "The total of all the numbers in the list was 26".</li>
+        <li>Write a function called <code>GuessingGame(Number)</code> which continually asks a user to guess what <code>Number</code> is. If they guess correctly say "You win!" and end the game. If they answer incorrectly output "Try again" and let them guess again.</li>
+        <li>Alter the <code>GuessingGame</code> function to say "Too Hot" if their guess is above number and "Too Cold" if their guess is below number instead of saying "Try again".</li>
+        <li>Write a function called <code>NumbersBetween(Start, End)</code> which returns a list containing all the numbers between <code>Start</code> and <code>End</code> inclusive.</li>
+        <li>Alter the <code>NumbersBetween</code> function to accept another argument <code>Step</code> such that it returns a list of numbers between <code>Start</code> and <code>End</code> incremented by <code>Step</code>. So <code>NumbersBetween(1, 10, 2)</code> would return <code>[1, 3, 5, 7, 9]</code>.</li>
+        <li>Write a function called <code>Swap(Items, PositionOne, PositionTwo)</code> which accepts three arguments: <code>Items</code> a list of items, <code>PositionOne</code> the position of the first item to swap, and <code>PositionTwo</code> the position of the second item to swap. Your function should alter <code>Items</code> so that the items at <code>PositionOne</code> and <code>PositionTwo</code> change places.</li>
+    </ol>
+    <p class="important">For each activity you attempt, save your code into a file called "activity-N.txt" where N is the number of the activity in the list. Include all of these files in your zip!</p>
+
+    <h4>Psuedocode Bubble Sort</h4>
+    <p>
+        Using the constructs in the above table have a go at translating your instructions into pseudocode using the following starting point (remember that <code>Items</code> will be a list!):
+    </p>
+<pre>
+Function BubbleSort(Items)
+    Swapped ← False
+    While ... Do
+        ...
+    End While
+End Function
+</pre>
+    <p class="important">Write your code in a text file called "psuedocode.txt" and include it in your zip file.</p>
+    
+    <h2>JavaScript Implementation (Extension)</h2>
+    <p>If you feel up to it have a go at implementing your psuedocode in JavaScript below. Remember that JavaScript is 0 indexed! You can read more about Arrays (JavaScripts version of a list) <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">here</a>.</p>
+    <textarea id="js"></textarea>
+    <p>It <span class="important">MUST have a function named <code>BubbleSort</code> with a parameter named <code>items</code> such as:</span></p>
+<pre>
+function BubbleSort(items) {
+    // your code here
+}
+</pre>
+    <h3 id="js-errors"></h3>
+    <button id="test-btn">Test</button>
+    <p>Input: <code id="input-list"></code></p>
+    <p>Result: <code id="output-list"></code></p>
+
+    <script src="https://cdn.jsdelivr.net/npm/tidy-html5@0.1.1/tidy.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.js" integrity="sha512-WWC1A/JchDFZ2ZGaNyMC7CmPFXGLI/6Ih7WN6YG0DX1NGMkW5lqCVFxCmEx3e56Z7iqdQGpO0f+m2t9CJhdb2Q==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/xml/xml.min.js" integrity="sha512-k1HnoY9EXahEfPz7kq/lD9DltloKH9OrB9XNKYoUQrNz9epe5F4mQP5PfuIfeRfoXHkNrE0gF3Mx4LhC5BVl9Q==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/css/css.min.js" integrity="sha512-DG+5u//fVN9kpDgTGe78IJhJW8e5+tlrPaMgNqcrzyPXsn+GPaF2T62+X3ds7SuhFR9Qeb7XZ6kMD8X09FeJhA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/javascript/javascript.min.js" integrity="sha512-e3U/84Fo+2ZAnRhLkjStm2hYnkmZ/NRmeesZ/GHjDhcLh35eYTQxsfSeDppx6Se5aX0N6mrygH7tr4wugWsPeQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/jsx/jsx.min.js" integrity="sha512-3nqjKX3PFFro49mt6eutA/QOJn7aE3g3QaXPbSoN/UxjsVmiXjsfBEFovpJsbB2u8hA1dCVGY111r7wTGUqzIw==" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/jshint@2.9.6/dist/jshint.js"></script>
+    <script src="https://unpkg.com/csslint@1.0.5/dist/csslint.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmlhint@latest/dist/htmlhint.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/lint/lint.min.js" integrity="sha512-RdJvbOzGnwdtp9BQeTizlaLYso82zOHxY22BY2FdFfrfE8hBtC8oFevtRGFlJ7jsqMqcCk8pSSpjl4TAaCTv/g==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/lint/html-lint.min.js" integrity="sha512-NG4kugClhatqr4Gk18fSBbV343Mr8GAPnAadvfevvY0CkTLpoB2pqCsfRr+O6FrHU8NIQh+9K34TPfvb3tfcww==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/lint/javascript-lint.min.js" integrity="sha512-NSKMHamv0oBrbhEoC4XEPEdWjryQmaFpUHmSRbNTebEDMP1HOVUuM7KSAWtYdVeJ2qEdOOsUbKmC7pbJDM2Dpw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/lint/css-lint.min.js" integrity="sha512-QFKhFpBjIcr7Idbj93rY441nA8m0bgxxbmdPEUz+ohmTzuKFcniq/8xlk8CQVkUTECJ1HKkC4vAEvjnIO5eKYw==" crossorigin="anonymous"></script>
+    <script>
+        const jsErrorsElement = document.getElementById("js-errors");
+        const jsTextAreaElement = document.getElementById("js");
+        const inputListElement = document.getElementById("input-list");
+        const outputListElement = document.getElementById("output-list");
+        const testBtnElement = document.getElementById("test-btn");
+        const jsEditor = CodeMirror.fromTextArea(jsTextAreaElement, {
+            mode: "javascript",
+            lint: { esversion: 6 },
+            lineNumbers: true,
+            gutters: ["CodeMirror-line-markers"]
+        });
+
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+        }
+
+        function testCode() {
+            const testList = [];
+            for (let i = 0; i < getRandomInt(3, 8); i++) {
+                testList.push(getRandomInt(1, 11));
+            }
+            try {
+                const testListJson = JSON.stringify(testList);
+                jsErrorsElement.textContent = "";
+                inputListElement.textContent = testListJson;
+                outputListElement.textContent = "";
+                [_, body] = jsEditor.getValue().match(/function\s+.*?\(.*?\)\s*\{(.*)\}/s);
+                const f = new Function('items', body);
+                f(testList);
+                const resultListJson = JSON.stringify(testList);
+                outputListElement.textContent = resultListJson;
+            } catch (error) {
+                jsErrorsElement.textContent = error;
+            }
+        }
+
+        testBtnElement.addEventListener("click", testCode);
+    </script>
+    <p class="important">Copy your code into a file called "javascript.js" and include it in your zip file.</p>
+</body>
+</html>

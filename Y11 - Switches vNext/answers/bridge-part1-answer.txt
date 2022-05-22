@@ -1,0 +1,13 @@
+While True
+    Call RecivePacket("eth0", Eth0Frame, DidHaveEth0HaveFrame)
+    If DidHaveEth0HaveFrame Then
+        FromMac <- GetMacAddressOfInterface("eth1")
+        Call SendPacket("eth1", Eth0Frame.ToMac, FromMac, Eth0Frame.Payload)
+    End If
+
+    Call RecivePacket("eth1", Eth1Frame, DidHaveEth1HaveFrame)
+    If DidHaveEth1HaveFrame Then
+        FromMac <- GetMacAddressOfInterface("eth0")
+        Call SendPacket("eth0", Eth1Frame.ToMac, FromMac, Eth1Frame.Payload)
+    End If
+End While

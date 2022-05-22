@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Facts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+   <nav>
+       <ol>
+           <li>
+               <span class="nav-icon">🏠</span>
+               <a href="index.html" class="nav-link">Homepage</a>
+            </li>
+            <li>
+                <span class="nav-icon">🎮</span>
+                <a href="games.html" class="nav-link">Games</a>
+             </li>
+             <li>
+                <span class="nav-icon">🧠</span>
+                <a href="facts.html" class="nav-link">Facts</a>
+             </li>
+       </ol>
+   </nav>
+    
+    <h1>World Facts Website</h1>
+    <!-- Intoduction using p, em and strong elements. -->
+    <p>
+        The world is a very <em>interesting</em> place and there are many facts which you may not know, but would interest you. That's what this site <strong>is for</strong>!
+    </p>
+
+    <h2>Tetris Shapes</h2>
+    <ul id="tetris-shapes">
+        <li>
+            <span class="tetromino-name">T Shape</span>
+            <div class="tetromino">
+                <div class="tile green"></div>
+                <div class="tile green"></div>
+                <div class="tile green"></div>
+                <div class="tile empty"></div>
+                <div class="tile green"></div>
+                <div class="tile empty"></div>
+            </div>
+        </li>
+        <li>
+            <span class="tetromino-name">S Shape</span>
+            <div class="tetromino">
+                <div class="tile empty"></div>
+                <div class="tile pink"></div>
+                <div class="tile pink"></div>
+                <div class="tile pink"></div>
+                <div class="tile pink"></div>
+                <div class="tile empty"></div>
+            </div>
+        </li>
+    </ul>
+
+    <!-- Our table (which was originally a simple list) of the
+         tallest buildings in the world. -->
+    <h2>World's Top 5 Tallest Buildings</h2>
+    <p>This is a table of the top 5 tallest buildings in the world:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>City</th>
+                <th>Height (m)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Burj Khalifa</td>
+                <td>Dubai</td>
+                <td>828</td>
+            </tr>
+            <tr>
+                <td>Shanghai Tower</td>
+                <td>Shanghai</td>
+                <td>632</td>
+            </tr>
+            <tr>
+                <td>Abraj Al-Bait Clock Tower</td>
+                <td>Mecca</td>
+                <td>601</td>
+            </tr>
+            <tr>
+                <td>Ping An Finance Center</td>
+                <td>Shenzen</td>
+                <td>599</td>
+            </tr>
+            <tr>
+                <td>Lotte World Tower</td>
+                <td>Seoul</td>
+                <td>544.5</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Our form for ordering sandwiches. -->
+    <h2>Sandwich Order</h2>
+    <p>
+        Sandwich's are a tasty and convenient form of food, you can order one here:
+    </p>
+    <form>
+        <fieldset>
+            <h3 class="form-header">Your Order</h3>
+            <label for="student-name">Student Name:</label>
+            <input name="student-name" type="text" />
+            <label for="delivery-location">Delivery Location:</label>
+            <input name="delivery-location" type="text">
+            <label for="filling">Filling:</label>
+            <select name="filling" list="fillings">
+                <option>Peanut Butter</option>
+                <option>Beef</option>
+                <option>Beef w/ Salad</option>
+                <option>Cheese</option>
+            </select>
+            <label for="bread">Bread:</label>
+            <select name="bread" list="bread-types">
+                <option>White</option>
+                <option>Wholemeal</option>
+                <option>Multigrain</option>
+                <option>Gluten Free</option>
+            </select>
+        </fieldset>
+    </form>
+</body>
+</html>

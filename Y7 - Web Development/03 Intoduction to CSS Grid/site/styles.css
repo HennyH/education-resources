@@ -1,0 +1,136 @@
+/* Navbar */
+
+nav > ol {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  list-style: none;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+nav > ol > li {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  font-size: 1.25em;
+  background-color: green;
+  border: 1px dashed white;
+}
+
+nav > ol > li:hover {
+  background-color: lightgreen;
+  transition: all 500ms linear;
+}
+
+nav > ol > li:hover > .nav-icon {
+  transform: rotate(360deg);
+  transition: all 500ms linear;
+}
+
+.nav-icon {
+  justify-self: end;
+  padding: 0.5em;
+}
+
+.nav-link {
+  color: white;
+}
+
+html {
+  background-color: lightgray;
+}
+
+p {
+  background-color: #C8A2C8;
+}
+
+strong, em {
+  background-color: #d6eef8
+}
+
+h1,
+h2 {
+  font-family: "Press Start 2P", cursive;
+  text-align: center;
+}
+
+/* Form styles */
+
+form {
+  font-family: "Annie Use Your Telescope", cursive;
+}
+
+label,
+.form-header {
+  font-size: 1.25em;
+}
+
+.form-header {
+  font-weight: bold;
+  font-style: italic;
+  grid-column: 1 / -1;
+  margin: 0 auto;
+}
+
+label {
+  color: darkorchid;
+  margin-right: 0.25em;
+}
+
+fieldset {
+    display: grid;
+    grid-template-columns: max-content minmax(200px, max-content);
+    grid-auto-flow: row;
+    gap: 0.25em;
+}
+
+/* Table styles */
+
+th,
+td {
+  border: 1px solid black;
+  padding: 0.25em;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+tbody > tr:nth-child(2n) {
+  background-color: lightpink;
+}
+
+/* Tetris Styles */
+
+#tetris-shapes {
+  list-style: none;
+}
+
+.tetromino-name {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.tetromino {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  grid-auto-rows: 1fr;
+}
+
+.tile {
+  border: 1px solid lightslategray;
+  height: 50px;
+  width: 50px;
+}
+
+.green {
+  background-color: lightgreen;
+}
+
+.empty {
+  background-color: lightgray;
+}
+
+.pink {
+  background-color: lightpink;
+}

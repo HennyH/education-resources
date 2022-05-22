@@ -1,0 +1,12 @@
+// === Guessing Game (10 Points) ===
+// Write a program which lets the user play a number guessing game.
+// The game should allow users to enter a guess until it matches the number,
+// when they guess the correct number print "You guessed it in X guesses" (where
+// X is the number of times they guessed a number) and the program
+// should stop. If the guess is above the number print out "Too Hot", otherwise,
+// if it is less than the number print "Too Cold".
+//
+// Assumptions:
+// 1. There exists a function called `Random(Lower, Upper)` which returns a random integer
+// between `Lower` and `Upper` inclusive.
+

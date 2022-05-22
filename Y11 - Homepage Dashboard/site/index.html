@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <style>
+        body {
+            display: grid;
+            grid-template-columns: 1fr 40% 1fr;
+            height: 100vh;
+            margin: 0;
+            background-color: lightblue;
+        }
+
+        iframe {
+            height: 100%;
+            margin: 0;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <iframe src="/cgi-bin/anime_today.py"></iframe>
+    <iframe src="/static/search-bar.html"></iframe>
+    <iframe src="/cgi-bin/crypto_ticker.py"></iframe>
+</body>
+</html>

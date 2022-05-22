@@ -1,0 +1,147 @@
+/* Part 4 (15 Marks)
+ * ================
+ * In light of the star network topology lets address the following issues
+ * in our code:
+ * 
+ * 1. The hardcoded mac to interface mapping file is hard to maintain -
+ *    especially if new devices are joining the network often.
+ * 
+ * 2. The suggested `Interfaces <- ["eth0", "eth1"]` code would not work
+ *    well with computer S as depicted in our star network diagram. That is
+ *    because computer S has 6 interfaces (eth0, eth1, ..., eth5), we need
+ *    to listen on all of these!
+ *
+ * To address issue 1) modify the program such that
+ * the mapping of MAC to interface is constructed _dynamically_ as
+ * the program runs. We can construct our mapping based on a simple idea:
+ *
+ * If we recieve a packet on interface ethN, and within the frame we see it
+ * was sent from a device with MAC address 00:82:BF:2F:AB:3E (you can tell
+ * this by looking at Frame.FromMac) then we know that the computer with MAC
+ * address 00:82:BF:2F:AB:3E must be accessible via ethN!
+ *
+ * To alter the mapping make use of the provided SetMappedValue(...) module!
+ *
+ * In order to address issue 2) use the provided GetAllInterfacesOfHost() function which
+ * returns an array of all the interfaces on the host. When we call this function
+ * in the star network scenario on computer S we could recieve back:
+ *
+ * ["eth0", "eth1", "eth2", "eth3", "eth4", "eth5"]
+ *
+ * Make sure you listen for any packets on all of these interfaces!
+ *
+ * Note: for our purposes assume once a computer joins the network it never leaves or moves!
+ * This allows you to assume that a MAC address will only ever be associated with
+ * at most one interface.
+ */
+
+// A structure which holds the Ethernet frame related data
+Record structure
+    Frame
+        FromMac
+        ToMac
+        EtherTypeOrLength
+        Payload
+
+Function GetMacAddressOfInterface(Interface)
+    // A function which returns the MAC address of
+    // the given interface.
+    //
+    // Example usage:
+    //
+    // Eth0Mac <- GetMacAddressOfInterface("eth0")
+End Function
+
+Module RecievePacket(Interface, Frame, DidRecievePacket)
+    // Checks if a packet is being recieved on the given
+    // interface. Any recieved packet's frame is assigned to the
+    // out parameter Frame, and a boolean value indicating
+    // if a packet was recieved is assigned to the out
+    // parameter DidRecievePacket.
+    //
+    // Example usage:
+    //
+    // Call RecievePacket("eth0", Eth0Frame, DidEth0HavePacket)
+    // If DidEth0HavePacket Then
+    //      Output("Eth0 Packet's payload was: ", Eth0Frame.Payload)
+    // End If
+End Module
+
+Module SendPacket(Interface, ToMac, FromMac, Payload)
+    // Constructs an ethernet packet with the given payload
+    // and to/from MAC addresses. After constructing the
+    // packet it is sent out from the specified interface.
+    // 
+    // Example usage:
+    // 
+    // Call SendPacket("eth1", "00:15:5D:35:07:6D", "00:82:BF:2F:AB:3E", "Hi friendo")
+End Module
+
+Record structure
+    Mapping
+        Keys
+        Values
+
+Function LoadMapping(Filename)
+    // Constructs a Mapping record based upon the contents of
+    // the given file.
+    // 
+    // Example usage:
+    // 
+    // MyMapping <- LoadMapping("my_mapping_file.cfg")
+End Function
+
+Module GetMappedValue(Map, Key, Value, WasKeyFound)
+    // Given a Mapping record Map, see if there is any
+    // value associated with the given Key. If a value has
+    // been associated it, assign it to the out parameter
+    // value. Place a boolean in the out parameter WasKeyFound
+    // which indicates if a value for the given key was found.
+    //
+    // Here is an exmple of how to use it:
+    //
+    // Call GetMappedValue(MacToInterface, "00:15:5D:35:07:6D", Interface, WasMacFound)
+    // If WasMacFound Then
+    //      ...
+    // End If
+End Module
+
+Function GetAllInterfacesOfHost()
+    // Returns an array of all the interfaces on the host.
+    //
+    // Example usage:
+    //
+    // Interfaces <- GetAllInterfacesOfHost()
+    // Eth0 <- Interfaces[0]
+    // ...
+    // Eth15 <- Interfaces[15]
+End Function
+
+
+Function EmptyMapping()
+    // Returns a new empty Mapping record for use with the
+    // GetMappedValue and SetMappedValue modules.
+    //
+    // Example usage:
+    //
+    // AnEmptyMap <- EmptyMapping()
+End Function
+
+Module SetMappedValue(Map, Key, Value)
+    // Associates Value with Key inside the mapping Map.
+    // After associating a value you can retrieve it via corresponding
+    // key using the GetMappedValue module.
+    //
+    // Example usage:
+    //
+    // Map <- EmptyMapping()
+    // Call SetMappedValue(Map, "Name", "Bob")
+    // Call GetMappedValue(Map, "Name", MyName, WasKeyFound)
+    // If WasKeyFound Then
+    //      Output ("The stored name was ", MyName)
+    // End If
+End Module
+
+Module Main
+    // TODO: Implement this module.
+End Module

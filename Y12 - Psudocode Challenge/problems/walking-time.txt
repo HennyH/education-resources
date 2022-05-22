@@ -1,0 +1,13 @@
+// === Walking Time (10 Points) ===
+// Write a function `WalkingTime(Waypoints, Speed)` which calculates the
+// the minutes required to walk from the first waypoint to the last, vis-a-vis the
+// other waypoints in order.
+//
+// Assumptions:
+// 1. Assume the function `Sqrt(N)` exists and returns the square root of a number.
+// 2. Assume `Speed` is in ms^-1.
+// 2. Assume the following record structure exists:
+// Structure record
+//    Waypoint
+//        Xmeters
+//        Ymeters

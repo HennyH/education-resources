@@ -1,0 +1,114 @@
+/* Part 2 (10 Marks)
+ * =================
+ * We now have a program which when run on computer B allows
+ * computers A and C to communicate with one another over
+ * Ethernet. However, our current solution retransmits
+ * any packet regardless of if it was intended for A or C.
+ *
+ * For example, lets say C sent a packet which was addressed
+ * to a non-existent computer D. B would see that packet and
+ * re-transmit it to A despite it being addressed for D! This
+ * is quite inefficent so lets fix it.
+ *
+ * Adapt your previous program so that it uses a `mac_map.cfg`
+ * text file such as:
+ *
+ * mac                      interface
+ * 00:15:5D:35:07:6D        eth0
+ * 00:82:BF:2F:AB:3E        eth1
+ *
+ * To determine which interface (if any!) to retransmit recieved
+ * packets on. The way to read the above file is as follows:
+ *
+ * A line such as:
+ *
+ * 00:15:5D:35:07:6D        eth0
+ *
+ * should be read as, 'A computer with MAC address 00:15:5D:35:07:6D
+ * is accessible via the interface eth0' - in other words, a computer
+ * with the MAC address 00:15:5D:35:07:6D is connected to my computer
+ * via an ethernet cable which is plugged into my eth0 interface.
+ *
+ * Using the `mac_map.cfg` file and the provided functions, enhance
+ * your existing algorithim so that B only re-broadcasts a packet
+ * when it knows that the addressed computer is accessible via one
+ * of its interfaces. It should then send that packet using the associated
+ * interface. If a computer with the given MAC address is NOT accessible
+ * it should do NOTHING with the packet.
+
+// A structure which holds the Ethernet frame related data
+Record structure
+    Frame
+        FromMac
+        ToMac
+        EtherTypeOrLength
+        Payload
+
+Function GetMacAddressOfInterface(Interface)
+    // A function which returns the MAC address of
+    // the given interface.
+    //
+    // Example usage:
+    //
+    // Eth0Mac <- GetMacAddressOfInterface("eth0")
+End Function
+
+Module RecievePacket(Interface, Frame, DidRecievePacket)
+    // Checks if a packet is being recieved on the given
+    // interface. Any recieved packet's frame is assigned to the
+    // out parameter Frame, and a boolean value indicating
+    // if a packet was recieved is assigned to the out
+    // parameter DidRecievePacket.
+    //
+    // Example usage:
+    //
+    // Call RecievePacket("eth0", Eth0Frame, DidEth0HavePacket)
+    // If DidEth0HavePacket Then
+    //      Output("Eth0 Packet's payload was: ", Eth0Frame.Payload)
+    // End If
+End Module
+
+Module SendPacket(Interface, ToMac, FromMac, Payload)
+    // Constructs an ethernet packet with the given payload
+    // and to/from MAC addresses. After constructing the
+    // packet it is sent out from the specified interface.
+    // 
+    // Example usage:
+    // 
+    // Call SendPacket("eth1", "00:15:5D:35:07:6D", "00:82:BF:2F:AB:3E", "Hi friendo")
+End Module
+
+Record structure
+    Mapping
+        Keys
+        Values
+
+Function LoadMapping(Filename)
+    // Constructs a Mapping record based upon the contents of
+    // the given file.
+    // 
+    // Example usage:
+    // 
+    // MyMapping <- LoadMapping("my_mapping_file.cfg")
+End Function
+
+Module GetMappedValue(Map, Key, Value, WasKeyFound)
+    // Given a Mapping record Map, see if there is any
+    // value associated with the given Key. If a value has
+    // been associated it, assign it to the out parameter
+    // value. Place a boolean in the out parameter WasKeyFound
+    // which indicates if a value for the given key was found.
+    //
+    // Here is an exmple of how to use it:
+    //
+    // Call GetMappedValue(MacToInterface, "00:15:5D:35:07:6D", Interface, WasMacFound)
+    // If WasMacFound Then
+    //      ...
+    // End If
+End Module
+
+Module Main
+    Interfaces <- ["eth0", "eth1"]
+    MacToInterface <- LoadMapping(...)
+    // TODO: Complete this module.
+End Module

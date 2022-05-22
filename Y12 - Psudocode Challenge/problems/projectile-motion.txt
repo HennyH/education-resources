@@ -1,0 +1,25 @@
+// === Projectile Motion (5 Points) ===
+// Write a module `ProjectilePosition(InitialSpeed, Angle, Gravity, Time, X, Y)` which
+// returns the `X` and `Y` positon of a projectile at the time `Time` in the gravity
+// field `Gravity` given an initial speed of `InitialSpeed` at an angle `Angle` degrees
+// from the horizontal.
+//
+// For example a classic 45deg cannon fire could be calculated using:
+// Call ProjectilePosition(120, 45, -9.8, 6, X, Y)
+//
+// Assumptions:
+// 1. `InitialSpeed` has units ms^-1.
+// 2. `Gravity` has units ms^-2.
+// 3. `Time` has units s.
+// 4. `X` should have units m.
+// 5. `Y` should have units m.
+// 6. There exist the trigometric functions `Cos(Angle)` and `Sin(Angle)`.
+//
+// The equations of motion are:
+// x = s * t * cos(angle)
+// y = s * t * sin(angle) + 0.5 * g * t^2
+// where s = the initial speed
+// note this assumes g has been expressed as a NEGATIVE acceleration.
+//
+// When doing this question you ARE ALLOWED to access this site:
+// https://en.wikipedia.org/wiki/Projectile_motion

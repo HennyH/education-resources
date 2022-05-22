@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Facts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap" rel="stylesheet">
+    <style>
+        html {
+            background-color: lightgray;
+        }
+
+        p {
+            background-color: #C8A2C8;
+        }
+
+        strong, em {
+            background-color: #d6eef8
+        }
+
+        h1, h2 {
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        form {
+            font-family: 'Annie Use Your Telescope', cursive;
+        }
+
+        label, legend {
+            font-size: 1.25em;
+        }
+
+        legend {
+            font-weight: bold;
+            font-style: italic;
+            padding: 0 0.5em;
+        }
+
+        label {
+            color: darkorchid;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 0.25em;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        tbody > tr:nth-child(2n) {
+            background-color: lightpink;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>World Facts Website</h1>
+    <!-- Intoduction using p, em and strong elements. -->
+    <p>
+        The world is a very <em>interesting</em> place and there are many facts which you may not know, but would interest you. That's what this site <strong>is for</strong>!
+    </p>
+
+    <!-- Our table (which was originally a simple list) of the
+         tallest buildings in the world. -->
+    <h2>World's Top 5 Tallest Buildings</h2>
+    <p>This is a table of the top 5 tallest buildings in the world:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>City</th>
+                <th>Height (m)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Burj Khalifa</td>
+                <td>Dubai</td>
+                <td>828</td>
+            </tr>
+            <tr>
+                <td>Shanghai Tower</td>
+                <td>Shanghai</td>
+                <td>632</td>
+            </tr>
+            <tr>
+                <td>Abraj Al-Bait Clock Tower</td>
+                <td>Mecca</td>
+                <td>601</td>
+            </tr>
+            <tr>
+                <td>Ping An Finance Center</td>
+                <td>Shenzen</td>
+                <td>599</td>
+            </tr>
+            <tr>
+                <td>Lotte World Tower</td>
+                <td>Seoul</td>
+                <td>544.5</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Our form for ordering sandwiches. -->
+    <h2>Sandwich Order</h2>
+    <p>
+        Sandwich's are a tasty and convenient form of food, you can order one here:
+    </p>
+    <form>
+        <fieldset>
+            <legend>Your Order</legend>
+                <label for="student-name">Student Name:</label>
+                <input name="student-name" type="text" />
+                <br />
+                <label for="delivery-location">Delivery Location:</label>
+                <input name="delivery-location" type="text">
+                <br />
+                <label for="filling">Filling:</label>
+                <select name="filling" list="fillings">
+                    <option>Peanut Butter</option>
+                    <option>Beef</option>
+                    <option>Beef w/ Salad</option>
+                    <option>Cheese</option>
+                </select>
+                <br />
+                <label for="bread">Bread:</label>
+                <select name="bread" list="bread-types">
+                    <option>White</option>
+                    <option>Wholemeal</option>
+                    <option>Multigrain</option>
+                    <option>Gluten Free</option>
+                </select>
+        </fieldset>
+    </form>
+</body>
+</html>

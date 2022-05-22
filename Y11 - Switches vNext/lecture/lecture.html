@@ -1,0 +1,278 @@
+<h1 id="overview-of-this-week">Overview of this Week</h1>
+<ul>
+<li>This week we are <strong>not</strong> learning about the <em>internet</em>. There is a lot more to networking than the internet.</li>
+<li>We are going to look at how we establish and use local are networks over Ethernet</li>
+<li>By the end of this week you should be able to:
+<ul>
+<li>Describe the structure of ethernet packets</li>
+<li>Describe the flow of ethernet packets through a local area network</li>
+<li>Identify ethernet as an analouge transmission media</li>
+<li>Provide a definition of the term ‘protocol’ using ethernet as an example</li>
+<li>Explain the purpose of a switch and how it operates</li>
+<li>Use ethernet to communicate on a local area network</li>
+</ul></li>
+</ul>
+<h1 id="transmission-media">Transmission Media</h1>
+<ul>
+<li>Hold up an ethernet cable, explain that it is:
+<ul>
+<li>A <em>standadised</em> type of cable</li>
+<li>Typically contains 8 wires, twisted in pairs to produce 4 twisted cables.</li>
+<li>Typically allows speeds of up to 100 Mb/s</li>
+<li>Used over distances of &lt;= 100 meters.</li>
+</ul></li>
+<li>Re-introduce the concepts of digital vs analouge.
+<ul>
+<li>Divide up the board into to sections, one for digital and one for analogue.</li>
+<li>Place ideas about the terms onto the board.</li>
+<li>Synthesize a discussion and provide a working definition.</li>
+<li>Look at the crab powered computer, have students discuss if the crabs are a digital or analogue computer.
+<ul>
+<li><img src="https://assets.newatlas.com/dims4/default/a597c18/2147483647/strip/true/crop/2778x1880+0+0/resize/2838x1920!/format/webp/quality/90/?url=http%3A%2F%2Fnewatlas-brightspot.s3.amazonaws.com%2Farchive%2Fcrab_computer-3.jpg" style="width: 250px" /></li>
+<li><img src="https://assets.newatlas.com/dims4/default/aa896c2/2147483647/strip/true/crop/2928x2000+0+0/resize/2810x1920!/format/webp/quality/90/?url=http%3A%2F%2Fnewatlas-brightspot.s3.amazonaws.com%2Farchive%2Fcrab_computer-0.jpg" style="width: 250px" /></li>
+</ul></li>
+</ul></li>
+<li>Briefly mention that WiFi is <strong>not</strong> the internet! It is just a wireless transmission media and serves the same purpose as an ethernet cable but instead of a physical wire it uses radio waves.</li>
+</ul>
+<h1 id="a-two-computer-network">A Two Computer Network</h1>
+<ul>
+<li>Draw two computers connected with an ethernet cable.</li>
+<li>Look at Network Interface Cards (NIC), and explain how they convert digital data into an analogue signal. In this context we can use it to produce a signal which other devices on the <strong>same media</strong> can listen to.</li>
+<li>Discussion question: is this networking?
+<ul>
+<li><img src="https://i.imgflip.com/5l2w3h.jpg" title="fig:" alt="is this networking" /></li>
+</ul></li>
+<li>We need a standard way of communicating, if I spoke english and you spoke italian we would have a hard time understanding each other!</li>
+<li>This is where the ethernet standard come in, it defines for us message formats AND messaging methods:
+<ul>
+<li>MAC ADDRESSES!!!!!!!</li>
+</ul></li>
+</ul>
+<style>
+    #eth-datagram td, #eth-datagram th {
+        border: 1px solid black;
+    }
+
+    #eth-datagram th, #eth-datagram td {
+        text-align: center;
+    }
+
+    #eth-datagram th[colspan] {
+        background-color: lightgray;
+    }
+</style>
+<table id="eth-datagram">
+<thead>
+<tr>
+<th>
+Preamble
+</th>
+<th>
+Start Frame Delimiter
+</th>
+<th>
+MAC destination
+</th>
+<th>
+MAC source
+</th>
+<th>
+Ethertype/Length
+</th>
+<th>
+Payload
+</th>
+<th>
+Frame Check Seq. (CRC)
+</th>
+<th>
+Interpacket Gap
+</th>
+</tr>
+<tr>
+<th style="visibility: hidden;">
+</th>
+<th style="visibility: hidden;">
+</th>
+<th colspan="6" class="row-header">
+Frame
+</th>
+<th style="visibility: hidden;">
+</th>
+</tr>
+<tr>
+<th colspan="8">
+Packet
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+7 bytes
+</td>
+<td>
+1 bytes
+</td>
+<td>
+6 bytes
+</td>
+<td>
+6 bytes
+</td>
+<td>
+2 bytes
+</td>
+<td>
+46-1500 bytes
+</td>
+<td>
+4 bytes
+</td>
+<td>
+12 bytes
+</td>
+</tr>
+<tr>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+18-F1-45-27-23-A9
+</td>
+<td>
+1C-4D-70-FA-98-C6
+</td>
+<td>
+10
+</td>
+<td>
+1101000110010111011001101100110111110000011101111101111111001011011001100100
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Activity time: given that the above packet was ASCII encoded, how would we figure out the message? How would we write a python function to decode any data in the same format? (Have the class gather around and workshop it together.)
+<ul>
+<li>Ultimately what is all data stored as on a computer?</li>
+<li>How does the computer know what letter to display on the screen given a binary number?</li>
+<li>What is ASCII?</li>
+<li>Binary substring mapping approach.</li>
+<li>Binary to decimal conversion approach - how do we do that?
+<ul>
+<li><code>int(text, 2)</code></li>
+<li><code>sum(int(d) * 2 ** p for p, d enumerate(text.reverse()))</code></li>
+</ul></li>
+</ul></li>
+<li>Review: students complete the Ethernet 1 quiz. They must sit 1 computer apart!!!</li>
+</ul>
+<h1 id="a-makeshift-switch">A Makeshift Switch</h1>
+<ul>
+<li>Lets imagine the following scenario: Three hosts in a line, where the middle host is connected to each hosts on either side. We name these hosts (A, B, C). If we could <strong>install a program on each computer</strong> how might we send messages from A to C? or vise versa from C to A?
+<ul>
+<li>A has 1 NIC,</li>
+<li>B has 2 NICs (eth1, eth2)</li>
+<li>C has 1 NIC</li>
+<li>B runs the following software defined below.</li>
+</ul></li>
+</ul>
+<p>Have students work in groups of 3 to try produce a program like the one below. On the board let them know they can use the following functions:</p>
+<ul>
+<li><code>Function GetAllEthernetInterfaces()</code></li>
+<li><code>Module SocketRecieve(Interface, Message, HasRecievedMessage)</code></li>
+<li><code>Function SocketSend(Interface, Message)</code></li>
+<li><code>GetMappedValue(Mapping, Key, WasKeyFound)</code></li>
+</ul>
+<p>They should assume a file such as this exists:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode fwd.txt"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mac                 interface</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>00:15:5D:35:07:6D   eth1</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>00:82:BF:2F:AB:3E   eth2</span></code></pre></div>
+<p>And give them the following starter code:</p>
+<pre><code>Record structure
+    Message
+        FromMAC
+        ToMAC
+        Data
+
+// Load the mac -&gt; interface mapping
+MacToInterface &lt;- LoadMapping(&quot;fwd.txt&quot;)
+Interfaces &lt;- GetAllEthernetInterfaces()
+While True
+    For ...
+        ...
+        If ... Then
+            ...
+        End If 
+    End For
+End While</code></pre>
+<p>My solution is:</p>
+<pre><code>MacToInterface &lt;- LoadMapping(&quot;fwd.txt&quot;)
+Interfaces &lt;- GetAllEthernetInterfaces()
+While True
+    For InterfaceIndex &lt;- 0 To Length(Interfaces)
+        Call SocketRecieve(Interface, Message, HasRecievedMessage)
+        If HasReceivedMessage Then
+            OutgoingInterface &lt;- GetMappedValue(MacToInterface, Message.ToMAC, WasKeyFound)
+            If WasKeyFound Then
+                SocketSend(OutgoingInterface, Message)
+            End If
+        End If
+    End For
+End While</code></pre>
+<h1 id="star-networks">Star Networks</h1>
+<ul>
+<li>Now lets expand our network into a star configuration. A star network is just <strong>many two host networks</strong>! Where the <strong>switch</strong> (more on that in a minute) is connected to all the other hosts!</li>
+</ul>
+<figure>
+<img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Ffossbytes.com%2Fwp-content%2Fuploads%2F2016%2F03%2Fstar-topology1.png&amp;f=1&amp;nofb=1" alt="star network" /><figcaption aria-hidden="true">star network</figcaption>
+</figure>
+<ul>
+<li><p>The switch is in a similar position to our host B in the A-B-C network, except it is connected to a lot more computers! However,</p></li>
+<li><p>The software we wrote before was acting like a switch! Our software switch was statically configured to know which MAC addresses could be reached on a given inteface, but typically a network switch learns this dynamically by <em>observing</em> network traffic.</p></li>
+<li><p>Lets modify our program for before so that it learns mac -&gt; interface mappings by listening on the wire. Explain that they should make use of the following functions.</p>
+<ul>
+<li><code>SetMappedValue(Mapping, Key, Value)</code></li>
+<li><code>EmptyMapping()</code></li>
+</ul></li>
+</ul>
+<pre><code>Record structure
+    Message
+        FromMAC
+        ToMAC
+        Data
+
+MacToInterface &lt;- EmptyMapping()
+Interfaces &lt;- GetAllEthernetInterfaces()
+While True
+    For InterfaceIndex &lt;- 0 To Length(Interfaces)
+        Call SocketRecieve(Interface, Message, HasRecievedMessage)
+        If HasReceivedMessage Then
+            SetMappedValue(MacToInterfaces, Message.FromMAC, Interface)
+            OutgoingInterface &lt;- GetMappedValue(MacToInterface, Message.ToMAC, WasKeyFound)
+            If WasKeyFound Then
+                SocketSend(OutgoingInterface, Message)
+            End If
+        End If
+    End For
+End While</code></pre>
+<ul>
+<li><p>Construct a ‘trace table’ which details what happens to the ‘switch’ when different hosts send a message. After each message the switch’s <code>MacToInterface</code> mapping should be listed, and if a message was sent.</p></li>
+<li><p>Start a class discussion around: what happens if the switch doesn’t know out of which interface a given MAC address is accessible? What is a sensible default? Why? What are the implications of that choice?</p>
+<ul>
+<li>Send a message back saying ‘I don’t know how to forward that :/’</li>
+<li>Do nothing</li>
+<li>Send it out of all interfaces</li>
+<li>Send it out of all interfaces but the one it was recieved on</li>
+</ul></li>
+<li><p>Again adapt our psudocode to support this functionality - this time students are required to state any functions they think it is reasonable to assume would be predefined.</p></li>
+</ul>

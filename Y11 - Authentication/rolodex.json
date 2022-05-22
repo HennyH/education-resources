@@ -1,0 +1,4 @@
+{
+    "henry": "./keys/henry.pub",
+    "server": "./keys/server.pub"
+}

@@ -1,0 +1,256 @@
+<h1 id="remote-keyboard---part-1">Remote Keyboard - Part 1</h1>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<ul>
+<li>To be able to develop simple programs which use TCP.
+<ul>
+<li>“Technologies appropriate for the implementation of a client/server and peer-to-peer network”</li>
+</ul></li>
+<li>Understand the security implications of non-authenticated, non-signed and non-encrypted communication.</li>
+<li>Know how to authenticate, sign and encrypt a message.</li>
+</ul>
+<h2 id="background">Background</h2>
+<p>During the past year many people have been confined to their homes as part of COVID lockdowns. This made it very difficult to play local 2 player co-op games with a friend. You and your friend particularly enjoy playing the game Fireboy and Watergirl (https://www.fireboynwatergirl.com/). Being a knowledge computer science student you decide to create a program which will allow you to play the game together across the internet!</p>
+<h2 id="your-solution">Your Solution</h2>
+<p>You decide to write a program to transmit and replay keystrokes over a TCP connection. Your program can run in one of two modes: client mode or server mode. In server mode you listen for keystrokes (keydown and keyup) on your keyboard, and then transmit them to the connected client. In client mode you connect to a server and recieve a sequence of keydown or keyup messages.</p>
+<pre><code>+------------+              +-------------+                      
+|            |              |             |                      
+|            |     TCP      |             |                      
+|   Server   ---------------&gt;   Client    |                      
+|            |              |             |                      
+|            |              |             |                      
++------↑-----+              +------|------+                      
+       |                           |                             
+       | Server Keystroke          | Server Keystroke            
+       |                           |                             
++------|------+            +-------↓------+                      
+|  Keyboard   |            |  Keyboard    |                      
++-------------+            +-------|------+                      
+                                   |                             
+                                   | Server &amp; Client Keystroke   
+                                   |                             
+                          +--------↓--------+                    
+                          |      Game       |                    
+                          +-----------------+</code></pre>
+<h3 id="requirements">Requirements</h3>
+<p>In order to produce your program you should make use of the following modules:</p>
+<h4 id="keyboard-0.13.5">keyboard (0.13.5)</h4>
+<p>The keyboard module (https://pypi.org/project/keyboard/) makes it easy to listen for keystrokes and replay them. This is an <strong>external</strong> module, and thus you will need to install it on your system. This can be done by executing either of the following commands from a terminal:</p>
+<pre class="shell"><code>$ pip install keyboard
+OR
+$ python -m pip install keyboard</code></pre>
+<p>If your system complains that there is no such program or module <code>pip</code>, then you will need to install it. This is quite simple but also platform specific - use google!</p>
+<p>The documentation for this module is available on it’s GitHub page which is located at the following url: https://github.com/boppreh/keyboard</p>
+<p>In particular you should pay attention to the “Common patterns and mistakes” section (https://github.com/boppreh/keyboard#common-patterns-and-mistakes).</p>
+<h4 id="socket">socket</h4>
+<p>This is the built-in standard python library for doing networking. It makes it easy to use TCP to create a client/server program. The <strong>Example</strong> section of the documentation page (https://docs.python.org/3/library/socket.html#example) explains how to build a simple echo server. The code for which has been copied below for your convenience.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Echo server program</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> socket</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>HOST <span class="op">=</span> <span class="st">&#39;&#39;</span>                 <span class="co"># Symbolic name meaning all available interfaces</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>PORT <span class="op">=</span> <span class="dv">50007</span>              <span class="co"># Arbitrary non-privileged port</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> socket.socket(socket.AF_INET, socket.SOCK_STREAM) <span class="im">as</span> s:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    s.bind((HOST, PORT))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    s.listen(<span class="dv">1</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    conn, addr <span class="op">=</span> s.accept()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> conn:</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&#39;Connected by&#39;</span>, addr)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> <span class="bu">str</span>(conn.recv(<span class="dv">1024</span>), <span class="st">&quot;utf-8&quot;</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> data:</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            conn.sendall(data)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Echo client program</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> socket</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>HOST <span class="op">=</span> <span class="st">&#39;daring.cwi.nl&#39;</span>    <span class="co"># The remote host</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>PORT <span class="op">=</span> <span class="dv">50007</span>              <span class="co"># The same port as used by the server</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> socket.socket(socket.AF_INET, socket.SOCK_STREAM) <span class="im">as</span> s:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    s.<span class="ex">connect</span>((HOST, PORT))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    s.sendall(<span class="st">&#39;Hello, world&#39;</span>.encode(<span class="st">&quot;utf-8&quot;</span>))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> s.recv(<span class="dv">1024</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;Received&#39;</span>, <span class="bu">repr</span>(data))</span></code></pre></div>
+<h2 id="tasks-65-marks">Tasks (/65 Marks)</h2>
+<h3 id="tcp-25-marks">TCP (25 Marks)</h3>
+<p>Answer the following questions:</p>
+<ol type="1">
+<li>(2 Marks) Define TCP in one or two sentences.</li>
+<li>(3 Marks) Describe the relationship between TCP and IP in one or two sentences.</li>
+<li>(10 Marks) State whether TCP or UDP is the more appropriate transport protocol for this application - justify your answer with reference to the characteristics of both protocols. You answer should be sufficently detailed (5 - 7 well reasoned sentences) to attain full marks.</li>
+<li>(10 Marks) Based upon the local area network setup illustrated below, describe the ‘journey’ of a transmitted key event from the server to the client (exclude the TCP handsake and acknowledgement of delivery). In particular discuss the following points:
+<ul>
+<li>Encapsulation of TCP data into an IP datagram.</li>
+<li>Encapsulation of an IP datagram within an Ethernet frame/packet.</li>
+<li>Retransmissions of Ethernet packets, including the changes in the source MAC address.</li>
+<li>The server’s reading of the Etherent packet’s headers and payload, in particular how it determines if it is the intended recipient of the packet and the embedded datagram.</li>
+</ul></li>
+</ol>
+<pre><code>                  +------------+                  
++--------+  Eth   |            |  Eth   +--------+
+| Client ----------    Hub     ---------- Server |
++--------+        |            |        +--------+
+                  +------------+                 </code></pre>
+<h3 id="implementation-35-marks">Implementation (35 Marks)</h3>
+<p>You must implement the following function in the <code>main.py</code> python file:</p>
+<ul>
+<li>(2 Marks) <code>format_key_event</code>.</li>
+<li>(2 Marks) <code>parse_formatted_key_event</code>.</li>
+<li>(2 Marks) <code>transmit_keyevent</code>.</li>
+<li>(4 Marks) <code>should_transmit_keyevent</code>.</li>
+<li>(5 Marks) <code>handle_keyevent</code>.</li>
+<li>(10 Marks) <code>start_server</code>.</li>
+<li>(10 Marks) <code>start_client</code>.</li>
+</ul>
+<p>If your function’s implementation is correct (that is, it correctly satisfies the requirements stated within the docstrings) then you will be awarded full points.</p>
+<p>If you solution is not correct then for each line which requires fixing either 1 or 2 marks will be deducted based upon the size of the change.</p>
+<h3 id="style-5-marks">Style (5 Marks)</h3>
+<p>The 5 marks for style are awarded based upon the simplicity, elegance, readabiltiy and pythonic-ness of your implementation.</p>
+<h2 id="code-template">Code Template</h2>
+<pre><code>import argparse
+import socket
+import sys
+from functools import partial
+import keyboard
+
+def format_key_event(key_event):
+    &quot;&quot;&quot;
+    (2 Marks)
+    Formats a key event into a format suitable for network transmision.
+    The formatted key event should be in the format expected by the
+    associated parse_formatted_key_event function.
+
+    Remember:
+
+    - key_event.event_type gives you back the type of event (&quot;up&quot; or &quot;down&quot;)
+    - key_event.name gives you the key that was pressed (&quot;A&quot;, &quot;W&quot;, etc...)
+    &quot;&quot;&quot;
+    pass
+
+def parse_formatted_key_event(formatted_key_event):
+    &quot;&quot;&quot;
+    (2 Marks)
+    Parses a formatted key event into a tuple containing the type of the
+    event (&quot;up&quot; or &quot;down&quot;) and they key involved (e.g. &quot;W&quot;, &quot;A&quot;, etc...).
+
+    You may not have used a tuple before... You can read more about them
+    here: https://docs.python.org/3/library/stdtypes.html#tuple
+    &quot;&quot;&quot;
+    pass
+
+def transmit_keyevent(conn: socket.socket, key_event):
+    &quot;&quot;&quot;
+    (2 Marks)
+    This function should simply format the provided key event using the
+    format_key_event function, and send it via the provided socket connection.
+    &quot;&quot;&quot;
+    pass
+
+def should_transmit_keyevent(key_event, transmitted_down_keys: set):
+    &quot;&quot;&quot;
+    (4 Marks)
+    This function determines if a key event should be transmitted. A down
+    keypress for a particular key should only be transmitted **once** for
+    the duration of the time the key is held down. The `transmitted_down_keys` parameter
+    of this function is a set (https://docs.python.org/3/library/stdtypes.html#set)
+    containing the name of all the keys which:
+        1. Are currently being held down
+        2. Have already transmitted an associated down key event
+    You should use this set as part of your implementation of this function. 
+    
+    Remember:
+
+    - key_event.event_type gives you back the type of event (&quot;up&quot; or &quot;down&quot;)
+    - key_event.name gives you the key that was pressed (&quot;A&quot;, &quot;W&quot;, etc...)
+    &quot;&quot;&quot;
+    pass
+
+def handle_keyevent(conn: socket.socket, transmitted_down_keys: set, key_event):
+    &quot;&quot;&quot;
+    (5 Marks)
+    This function will be invoked whenever a key event is raised by the keyboard module.
+    In this function you should do the following:
+        1. Use the should_transmit_keyevent function above to determine if you should
+           transmit the given key_event. If the function returns True, then you should
+           transmit the frame using the transmit_keyevent function.
+        2. If you transmit a DOWN key event - then you should add that key to the
+           transmitted_down_keys set which is passed into this function.
+        3. If it is an UP key event then you should remove the released key from
+           the transmitted_down_keys set.
+
+    Remember:
+
+    - key_event.event_type gives you back the type of event (&quot;up&quot; or &quot;down&quot;)
+    - key_event.name gives you the key that was pressed (&quot;A&quot;, &quot;W&quot;, etc...)
+    &quot;&quot;&quot;
+    pass
+            
+def start_server(host, port):
+    &quot;&quot;&quot;
+    (10 Marks)
+    This function should open an (AF_INET, SOCK_STREAM) socket and bind it
+    to the provided (host, port). It should then start listening and then accept
+    a single connection. Once the first connection is established it should
+    use the following code snippet to respond to keypresses:
+
+    keyboard.hook(partial(handle_keyevent, conn, set()))
+    keyboard.wait()
+    &quot;&quot;&quot;
+    pass
+
+def start_client(host, port):
+    &quot;&quot;&quot;
+    (10 Marks)
+    This function should open an (AF_INET, SOCK_STREAM) socket and connect
+    to the provided (host, port). It should continuously wait to recieve (using recv())
+    any key event messages from the server. It should then parse the key event
+    message and replay it using the keyboard module&#39;s press() and release()
+    functions.
+
+    Look at the example echo server&#39;s code:
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        ...
+        with conn:
+            ...
+            while True:
+                data = str(conn.recv(1024), &quot;utf-8&quot;)
+                if not data:
+                    break
+                ...
+
+    In particular how it uses the recv() method, and if that method returned
+    an empty string (aka not data would be True) then it stops the loop.
+    &quot;&quot;&quot;
+    pass
+
+def get_argument_parser():
+    parser = argparse.ArgumentParser(&quot;Remote Keyboard&quot;)
+    subparsers = parser.add_subparsers(dest=&quot;mode&quot;)
+    client_parser = subparsers.add_parser(&quot;client&quot;, help=&quot;Client Mode&quot;)
+    client_parser.add_argument(&quot;--host&quot;, type=str, required=True, help=&quot;The IP address of the host to conenct to.&quot;)
+    client_parser.add_argument(&quot;--port&quot;, type=int, required=True, help=&quot;The port to conenct to.&quot;)
+    server_parser = subparsers.add_parser(&quot;server&quot;, help=&quot;Server Mode&quot;)
+    server_parser.add_argument(&quot;--host&quot;, type=str, required=False, default=&quot;&quot;, help=&quot;The IP address of the interface to listen on.&quot;)
+    server_parser.add_argument(&quot;--port&quot;, type=int, required=True, help=&quot;The port to listen on.&quot;)
+    return parser
+
+def main(argv = None):
+    argv = argv or sys.argv[1:]
+    parser = get_argument_parser()
+    result = parser.parse_args(argv)
+    if result.mode == &quot;server&quot;:
+        start_server(result.host, result.port)
+    elif result.mode == &quot;client&quot;:
+        start_client(result.host, result.port)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+
+</code></pre>
+<h1 id="remote-keyboard---part-2">Remote Keyboard - Part 2</h1>
+<h2 id="security-questions">Security Questions</h2>
+<ul>
+<li>Should we allow the client/server to restrict which key strokes it will replay?</li>
+<li>How do we know that our friend is the one who actually connected to our computer? What are the security implications of this?</li>
+<li>Could a hacker launch a man-in-the-middle attack and change our transmitted keystrokes before they get to the client? What are the security implications of this?</li>
+<li>Is running this program tantamount to running a keylogger?</li>
+</ul>

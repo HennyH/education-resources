@@ -1,0 +1,39 @@
+table {
+    border-spacing: 0;
+    margin: 1em;
+}
+
+form > label {
+    padding: 1em;
+}
+
+ol > li > button {
+    margin-left: 0.5em;
+}
+
+ol > li:not(:last-child) {
+    margin-bottom: 0.5em;
+}
+
+table input[type=number]::-webkit-inner-spin-button,
+table input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+td {
+    border: 1px solid gray;
+}
+
+td > input {
+    height: 2em;
+    width: 2em;
+    border: none;
+    text-align: center;
+}
+
+.binary {
+    overflow-wrap: anywhere;
+}

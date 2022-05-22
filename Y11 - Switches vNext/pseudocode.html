@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pseudocode Specification</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Montserrat&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        pre, code {
+            font-family: 'Fira Code', monospace;
+            background-color: lightblue;
+            border-radius: 5px;
+            width: max-content;
+        }
+
+        pre {
+            padding: 1em;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: 1px solid black;
+            padding: 0.25em;
+        }
+
+        tr > td:first-child {
+            font-weight: bold;
+            text-align: center;
+            vertical-align: center;
+        }
+
+        #bool-ops tr > td:first-child {
+            font-weight: normal;
+        }
+
+        #bool-ops tr > td:last-child {
+            font-weight: bold;
+            background-color: lightgray;
+        }
+
+        #bool-ops th, #bool-ops td {
+            text-align: center;
+        }
+
+        #bool-ops pre, #bool-ops code {
+            background-color: white;
+        }
+
+        #bool-ops td {
+            color: red;
+        }
+
+        #bool-ops td:nth-child(2) {
+            color: black;
+        }
+
+        #bool-ops td.true {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pseudocode Specification</h1>
+    <table id="components-table">
+        <thead>
+            <tr>
+                <th>Program Component</th>
+                <th>Syntax</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Comments -->
+            <tr>
+                <td>Comment</td>
+                <td>
+                    <pre>
+// your comment here...                        
+                    </pre>
+                </td>
+                <td>
+                    Programmer-readable explanation or annotation in the source code of a computer program.
+                </td>
+                <td>
+                    <pre>
+DiscountPct <- 0
+// Seniors get a 20% discount on bus fares
+If Age >= 60 Then
+    DiscountPct <- 20
+EndIf
+                    </pre>
+                </td>                
+            </tr>
+            <!-- Declaration -->
+            <tr>
+                <td>Declaration</td>
+                <td>
+                    <pre>
+`name`, ..., `name-N` As `type`
+                    </pre>
+                </td>
+                <td>
+                    Introduces unassigned variables of a specific data type to the current scope.
+                </td>
+                <td>
+                    <pre>
+X, Y, Z As Integer
+Name As String
+                    </pre>
+                </td>
+            </tr>
+            <!-- Sequence -->
+            <tr>
+                <td>
+                    Sequence
+                </td>
+                <td>
+                    <pre>
+`first-statement`
+`second-statement`
+...
+`nth-statement`
+                    </pre>
+                </td>
+                <td>
+                    Instructions are executed in order from top to bottom.
+                </td>
+                <td>
+                    <pre>
+Input (X)
+Input (Y)
+Sum <- X + Y
+                    </pre>
+                </td>
+            </tr>
+            <!-- One Way Selection -->
+            <tr>
+                <td>One Way Selection</td>
+                <td>
+                    <pre>
+If `condition` Then
+    `body`
+End If
+                    </pre>
+                </td>
+                <td>
+                    A condition is tested to determine if a branch or path is followed.
+                </td>
+                <td>
+                    <pre>
+If Age >= 18 Then
+    Output ("Enterence Allowed")
+End If
+                    </pre>
+                </td>
+            </tr>
+            <!-- Boolean Logic -->
+            <tr>
+                <td>Boolean Logic</td>
+                <td>
+                    <pre>
+`left-expression` And `right-expression`
+`left-expression` Or `right-expression`
+                    </pre>
+                </td>
+                <td>
+                    Construct an expression whose value depends on multiple expressions according to a boolean operator.
+                    <table id="bool-ops">
+                        <thead>
+                            <tr>
+                                <th>Left</th>
+                                <th>Operator</th>
+                                <th>Right</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- And -->
+                            <tr>
+                                <td class="true"><code>True</code></td>
+                                <td>And</td>
+                                <td class="true"><code>True</code></td>
+                                <td class="true"><code>True</code></td>
+                            </tr>
+                            <tr>
+                                <td class="true"><code>True</code></td>
+                                <td>And</td>
+                                <td><code>False</code></td>
+                                <td><code>False</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>False</code></td>
+                                <td>And</td>
+                                <td class="true"><code>True</code></td>
+                                <td><code>False</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>False</code></td>
+                                <td>And</td>
+                                <td><code>False</code></td>
+                                <td><code>False</code></td>
+                            </tr>
+                            <!-- Or -->
+                            <tr>
+                                <td class="true"><code>True</code></td>
+                                <td>Or</td>
+                                <td class="true"><code>True</code></td>
+                                <td class="true"><code>True</code></td>
+                            </tr>
+                            <tr>
+                                <td class="true"><code>True</code></td>
+                                <td>Or</td>
+                                <td><code>False</code></td>
+                                <td class="true"><code>True</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>False</code></td>
+                                <td>Or</td>
+                                <td class="true"><code>True</code></td>
+                                <td class="true"><code>True</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>False</code></td>
+                                <td>Or</td>
+                                <td><code>False</code></td>
+                                <td><code>False</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td>
+                    <pre>
+If DataDate &lt; Today Or DataDate &gt; Today Then
+    Output ("Can only process data from today")
+End If
+                    </pre>
+                </td>
+            </tr>
+            <!-- Two Way Selection -->
+            <tr>
+                <td>Two Way Selection</td>
+                <td>
+                    <pre>
+If `condition` Then
+    `true-body`
+Else
+    `false-body`
+End If
+                    </pre>
+                </td>
+                <td>A condition is tested and one branch or path is followed if the condition is true, and the other if the condition was false.</td>
+                <td>
+                    <pre>
+If Age >= 18 Then
+    Output ("Enterence Allowed")
+Else
+    Output ("Entry Denied")
+End If
+                    </pre>
+                </td>
+            </tr>
+            <!-- Multi Way Selection -->
+            <tr>
+                <td>Multi Way Selection</td>
+                <td>
+                    <pre>
+Case `expression` Of
+    `condition-1`: `body-1`
+    ...
+    `condition-N`: `body-N`
+End Case
+                    </pre>
+                </td>
+                <td>A sequence of conditions are tested, the first condition (if any) to be evaluated as true will have the associated body of code executed.</td>
+                <td>
+                    <pre>
+Case GradePct Of
+    &lt; 50   : GradeLetter <- "F"
+    &lt; 60   : GradeLetter <- "P"
+    &lt; 70   : GradeLetter <- "C"
+    &lt; 80   : GradeLetter <- "D"
+    &lt;= 100 : GradeLetter <- "HD"
+End Case
+                    </pre>
+                </td>
+            </tr>
+            <!-- Counted Loop -->
+            <tr>
+                <td>For/Counted Loop</td>
+                <td>
+                    <pre>
+For `index` <- `start` To `end`
+    `body`
+End For
+                    </pre>
+                </td>
+                <td>A sequence of instructions is executed a <strong>fixed</strong> number of times with reference to a loop index variable.</td>
+                <td>
+                    <pre>
+For GameNumber <- 1 To Length (Games)
+    If Games[GameNumber].Win Then
+        Output ("We won game #", GameNumber)
+    Else
+        Output ("We lost game #", GameNumber)
+    End If
+End For
+                    </pre>
+                </td>
+            </tr>
+            <!-- Pre-Test Loop -->
+            <tr>
+                <td>While/Pre-Test Loop</td>
+                <td>
+                    <pre>
+While `condition`
+    `body`
+End While
+                    </pre>
+                </td>
+                <td>
+                    A condition is tested and if true a sequence of instructions are executed, this process is repeated a <strong>variable</strong> number of times.
+                </td>
+                <td>
+                    <pre>
+Answer <- 43
+Guess  <- -1
+While Guess != Answer
+    Input (Guess)
+End While
+                    </pre>
+                </td>
+            </tr>
+            <!-- Post-Test Loop -->
+            <tr>
+                <td>Repeat Until/Post-Test Loop</td>
+                <td>
+                    <pre>
+Repeat
+    `body`
+Until  `condition`
+                    </pre>
+                </td>
+                <td>
+                    A sequence of instructions are executed  a <strong>variable</strong> number of times until a condition is met.
+                </td>
+                <td>
+                    <pre>
+Answer <- 43
+Repeat
+    Input (Guess)
+Until Guess == Answer
+                    </pre>
+                </td>
+            </tr>
+            <!-- Function -->
+            <tr>
+                <td>Function</td>
+                <td>
+                    <pre>
+Function `function-name`(`parameter-1`, ..., `parameter-N`)
+    `body`
+    `function-name` <- `result-expression`
+End Function
+                    </pre>
+                </td>
+                <td>
+                    <p>
+                        A function is a <strong>parameterized</strong> sequence of instructions which returns a <strong>single</strong> result.
+                    </p>
+                    <p>
+                        A value is returned from a function by <em>assigning</em> a value to the name of the function (see example).
+                    </p>
+                </td>
+                <td>
+                    <pre>
+Function LetterForGradePct(GradePct)
+    Case GradePct Of
+        &lt; 50   : GradeLetter <- "F"
+        &lt; 60   : GradeLetter <- "P"
+        &lt; 70   : GradeLetter <- "C"
+        &lt; 80   : GradeLetter <- "D"
+        &lt;= 100 : GradeLetter <- "HD"
+    End Case
+    LetterForGradePct <- GradeLetter
+End Function
+                    </pre>
+                </td>
+            </tr>
+            <!-- Module -->
+            <tr>
+                <td>Module</td>
+                <td>
+                    <pre>
+Module `module-name`(`paramter-1`, ..., `parameter-N`)
+    `body`
+End Module
+
+Call `module-name` (`argument-1`, ..., `argument-N`)
+                    </pre>
+                </td>
+                <td>
+                    A module is a <strong>parameterized</strong> sequence of instructions which returns either <strong>zero</strong> or <strong>many</strong> results via <em>reference parameters</em>. A reference parameter allows a function to alter the argument variable itself. 
+                </td>
+                <td>
+                    <pre>
+Module Initials(FirstName, LastName, FirstNameInitial, LastNameInitial)
+    FirstNameInitial <- FirstName[0]
+    LastNameInitial <- LastName[0]
+End Module
+
+Call Initials ("Luke", "Hollingworth", MyFirstNameInitial, MyLastNameInitial)
+Output ("Initials are ", MyFirstNameInitial, ".", MyLastNameInitial)
+
+>>> Initials are L.H
+                    </pre>
+                </td>
+            </tr>
+            <!-- Entrypoint -->
+            <tr>
+                <td>Program Entrypoint</td>
+                <td>
+                    <pre>
+Module Main
+    `body`
+End Module
+                    </pre>
+                </td>
+                <td>The entrypoint of the program.</td>
+                <td>
+                    <pre>
+Module Main
+    Output ("Hello world")
+End Module
+                    </pre>
+                </td>
+            </tr>
+            <!-- Arrays -->
+            <tr>
+                <td>Array</td>
+                <td>
+                    <pre>
+`name` <- []
+`name`[`index`] <- `expression`
+Length (`name`)
+                    </pre>
+                </td>
+                <td>
+                    An array is an ordered collections of values accessible by a numerical index starting at 0. The number of items of a list can be retrieved using the <code>Length</code> function.
+                </td>
+                <td>
+                    <pre>
+Primes <- [2, 3]
+Primes[2] <- 5  // [2, 3, 5]
+SumOfPrimes <- 0
+For Index <- 0 To Length (Primes)
+    SumOfPrimes <- SumOfPrimes + Primes[Index]
+End For
+Output ("Sum of primes = ", SumOfPrimes)
+                    </pre>
+                </td>
+            </tr>
+            <!-- Records -->
+            <tr>
+                <td>Record</td>
+                <td>
+                    <pre>
+Record structure
+    `record-name`
+        `field-name-1`
+        ...
+        `field-name-N`
+                    </pre>
+                </td>
+                <td>A record structure defines a new type of value which contains some number of fields accessible by name.</td>
+                <td>
+                    <pre>
+Record structure
+        Point
+            X
+            Y
+
+Record structure
+        HttpResponse
+            Message
+            StatusCode
+
+HouseLocation As Point
+HouseLocation.X <- 200
+HouseLocation.Y <- 300
+Output ("My house is located at x = ", HouseLocation.X, " y = ", HouseLocation.Y)
+
+>>> My house is located at x = 200 y = 300
+                    </pre>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h1>Example Programs</h1>
+    <h2>Distance Calculator</h2>
+    <p>A function which calculates the distance between two points</p>
+    <pre>
+Record structure
+    Point
+        X
+        Y
+
+Function Distance(Point1, Point2)
+    DeltaX <- Abs (Point1.X - Point2.X)
+    DeltaY <- Abs (Point1.Y - Point2.Y)
+    Distance <- Sqrt (DeltaX^2 + DeltaY^2)
+End Function
+    </pre>
+    <h2>BMI Calculator</h2>
+    <p>Calcultes the BMI of a list of people.</p>
+    <pre>
+Function Bmi(MassKg, HeightM)
+    Bmi <- MassKg / (HeightM^2)
+End Function
+
+Record structure
+    Person
+        Name
+        MassKg
+        HeightM
+
+Module EnterPerson(Collection, Index, ShouldExit)
+    Input (ShouldExit)
+    NewPerson As Person
+    If ShouldExit == False Then
+        Input(NewPerson.Name)
+        Input(NewPerson.MassKg)
+        Input(NewPerson.HeightM)
+        Collection[Index] <- NewPerson
+        Index <- Index + 1
+    End If
+End Module
+
+Module Main
+    People <- []
+    NumberOfPeople <- 0
+    StopEnteringPeople <- False
+    Repeat
+        Call EnterPerson(People, NumberOfPeople, StopEnteringPeople)
+    Until StopEnteringPeople
+
+    For Index <- 0 To NumberOfPeople
+        Person <- People[Index]
+        PersonsBmi <- Bmi(Person.MassKg, Person.HeightM)
+        Output(Person.Name, "has a BMI of", PersonsBmi)
+    End For
+End Module
+    </pre>
+    <script>
+        const pres = document.querySelectorAll("pre");
+        for (const pre of pres) {
+            pre.innerText = (pre.innerText || '').trim();
+        }
+    </script>
+</body>
+</html>

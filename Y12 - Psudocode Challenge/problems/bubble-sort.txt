@@ -1,0 +1,19 @@
+// === Bubble Sort (20 Points) ===
+// Write a module named `BubbleSort(Items)` which sorts the array `Items` in place.
+// 
+// Bubble sort, sometimes referred to as sinking sort, is a simple sorting algorithm that
+// repeatedly steps through the list, compares adjacent elements and swaps them if they are
+// in the wrong order. The pass through the list is repeated until the list is sorted.
+// The algorithm, which is a comparison sort, is named for the way smaller or larger elements "bubble"
+// to the top of the list.
+//
+// Example:
+// BubbleSort([5,2,4])
+// Compare (5, 2), is 5 > 2 => yes, so swap => [2,5,4]
+// Compare (5, 4), is 5 > 4 => yes, so swap => [2,4,5]
+// Go back to first pair (2, 4), is 2 > 4 => no, don't swap => [2,4,5]
+// Compare (4, 5) is 4 > 5 => no, don't swap => [2, 4, 5]
+// Went through all pairs and didn't swap => STOP
+//
+// When doing this question you ARE ALLOWED to use the following site:
+// https://en.wikipedia.org/wiki/Bubble_sort

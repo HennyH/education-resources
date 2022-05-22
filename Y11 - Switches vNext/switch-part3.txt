@@ -1,0 +1,127 @@
+/* Part 5 (5 Marks)
+ * ================
+ * We're almost ready to take on CISCO except for one little problem...
+ * Our alpha test users reported it took a few moments before our switch
+ * software would reliably retransmit packets to their destination. The
+ * reason behind this is that we build up the MacToInterface mapping
+ * dynamically and to be registered in that mapping a device must send
+ * a packet.
+ *
+ * To get around this limitation we want to introduce one last feature to
+ * our switch software: If we recieve a packet on interface ethN addressed
+ * to a destination we do not have a mapping for, re-broadcast that packet
+ * on all interfaces EXCEPT ethN.
+ *
+ * This is the default behaviour in many switches in the real world.
+ */
+
+// A structure which holds the Ethernet frame related data
+Record structure
+    Frame
+        FromMac
+        ToMac
+        EtherTypeOrLength
+        Payload
+
+Function GetMacAddressOfInterface(Interface)
+    // A function which returns the MAC address of
+    // the given interface.
+    //
+    // Example usage:
+    //
+    // Eth0Mac <- GetMacAddressOfInterface("eth0")
+End Function
+
+Module RecievePacket(Interface, Frame, DidRecievePacket)
+    // Checks if a packet is being recieved on the given
+    // interface. Any recieved packet's frame is assigned to the
+    // out parameter Frame, and a boolean value indicating
+    // if a packet was recieved is assigned to the out
+    // parameter DidRecievePacket.
+    //
+    // Example usage:
+    //
+    // Call RecievePacket("eth0", Eth0Frame, DidEth0HavePacket)
+    // If DidEth0HavePacket Then
+    //      Output("Eth0 Packet's payload was: ", Eth0Frame.Payload)
+    // End If
+End Module
+
+Module SendPacket(Interface, ToMac, Payload)
+    // Constructs an ethernet packet with the given payload
+    // and to/from MAC addresses. After constructing the
+    // packet it is sent out from the specified interface.
+    // 
+    // Example usage:
+    // 
+    // Call SendPacket("eth1", "00:15:5D:35:07:6D", "00:82:BF:2F:AB:3E", "Hi friendo")
+End Module
+
+Record structure
+    Mapping
+        Keys
+        Values
+
+Function LoadMapping(Filename)
+    // Constructs a Mapping record based upon the contents of
+    // the given file.
+    // 
+    // Example usage:
+    // 
+    // MyMapping <- LoadMapping("my_mapping_file.cfg")
+End Function
+
+Module GetMappedValue(Map, Key, Value, WasKeyFound)
+    // Given a Mapping record Map, see if there is any
+    // value associated with the given Key. If a value has
+    // been associated it, assign it to the out parameter
+    // value. Place a boolean in the out parameter WasKeyFound
+    // which indicates if a value for the given key was found.
+    //
+    // Here is an exmple of how to use it:
+    //
+    // Call GetMappedValue(MacToInterface, "00:15:5D:35:07:6D", Interface, WasMacFound)
+    // If WasMacFound Then
+    //      ...
+    // End If
+End Module
+
+Function GetAllInterfacesOfHost()
+    // Returns an array of all the interfaces on the host.
+    //
+    // Example usage:
+    //
+    // Interfaces <- GetAllInterfacesOfHost()
+    // Eth0 <- Interfaces[0]
+    // ...
+    // Eth15 <- Interfaces[15]
+End Function
+
+
+Function EmptyMapping()
+    // Returns a new empty Mapping record for use with the
+    // GetMappedValue and SetMappedValue modules.
+    //
+    // Example usage:
+    //
+    // AnEmptyMap <- EmptyMapping()
+End Function
+
+Module SetMappedValue(Map, Key, Value)
+    // Associates Value with Key inside the mapping Map.
+    // After associating a value you can retrieve it via corresponding
+    // key using the GetMappedValue module.
+    //
+    // Example usage:
+    //
+    // Map <- EmptyMapping()
+    // Call SetMappedValue(Map, "Name", "Bob")
+    // Call GetMappedValue(Map, "Name", MyName, WasKeyFound)
+    // If WasKeyFound Then
+    //      Output ("The stored name was ", MyName)
+    // End If
+End Module
+
+Module Main
+    // TODO: Implement this module
+End Module

@@ -1,0 +1,21 @@
+// === Deltas (10 Points) ===
+// Write a function named `Deltas` which accepts a list of numbers and returns a
+// list containing the deltas (`y - x`) for two consecutive elements
+// `x` then `y`.
+//
+// For example
+// Deltas([1,2,3]) should return [1,1]
+// Deltas([]) should return []
+// Deltas([-1, 5, 4, 1]) should return [6, -1, -3]
+
+
+Function Deltas(Numbers)
+    Result <- []
+    For Index <- 0 To Length (Numbers) - 2
+        X <- Numbers[Index]
+        Y <- Numbres[Index + 1]
+        Delta <- Y - X
+        Result[Index] <- Delta
+    End For
+    Deltas <- Result
+End Function

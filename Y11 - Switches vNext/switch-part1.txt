@@ -1,0 +1,36 @@
+/* Part 3 (5 Marks)
+ * ================
+ * Our program is looking pretty good at this stage! So far we've only examined
+ * a network involving three computers A, B and C connected in series.
+ * Lets look at a more realistic scenario, called a 'star' network.
+ * The classroom's computers are probably configured in a star network topology.
+ * 
+ *                             +-------------------------------------+                           
+ *                             |               Computer S            |                           
+ * +---------------+           | +---------------+ +---------------+ |          +---------------+
+ * |Computer A    +----------------+  eth0        | |        eth3 +---------------+  Computer D  |
+ * +---------------+           | +---------------+ +---------------+ |          +---------------+
+ * +---------------+           | +---------------+ +---------------+ |          +---------------+
+ * |Computer B    +----------------+  eth1        | |        eth4 +---------------+  Computer E  |
+ * +---------------+           | +---------------+ +---------------+ |          +---------------+
+ * +---------------+           | +---------------+ +---------------+ |          +---------------+
+ * |Computer C    +----------------+  eth2        | |        eth5 +---------------+  Computer F  |
+ * +---------------+           | +---------------+ +---------------+ |          +---------------+
+ *                             +-------------------------------------+                            
+ */
+
+// (3 Marks)
+WhatIsAStarTopology <- "
+    // TODO: Research what a star toplogy is and write a brief description
+    of it's characteristics.
+
+    your answer here...
+"
+
+// (2 Marks)
+WhatIsComputerS <- "
+    // TODO: Given that the above diagram depicts a star network, is it accurate
+    to describe the role of Computer S as a switch?
+
+    your answer here...
+"

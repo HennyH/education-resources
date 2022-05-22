@@ -1,0 +1,19 @@
+// === Rectangle Intersection (15 Points) ===
+// Your goal is two write a function `RectIntersection(RectA, RectB)` which
+// returns a boolean value indicating if the two rectangles are overlapping.
+//
+// Assumptions:
+// 1. Assume the following structure record types (Rectangle, Point) exists:
+// Structure record
+//    Point
+//        X
+//        Y
+// Structure record
+//    Rectangle
+//        Center // Center is a `Point` record
+//        Width
+//        Height
+//
+// When answering this question you ARE ALLOWED to use the following websites:
+// https://stackoverflow.com/questions/306316/determine-if-two-rectangles-overlap-each-other
+// https://silentmatt.com/rectangle-intersection/

@@ -1,0 +1,101 @@
+// TODO: Create an array of strings with your group members names in it
+GroupMembers <- [    "Mr. Hollingworth"                                       ]
+
+/* Part 1 (10 Marks)
+ * =================
+ * For the purposes of completing this activity imagine
+ * you have the following network setup:
+ *
+ *   +------------+    +--------------+    +------------+
+ *   | Computer A |    |  Computer B  |    | Computer C |
+ *   |   +----+   |    | +----++----+ |    |   +----+   |
+ *   |   | e  |   |    | | e  || e  | |    |   | e  |   |
+ *   |   | t  |   |    | | t  || t  | |    |   | t  |   |
+ *   |   | h  |   |    | | h  || h  | |    |   | h  |   |
+ *   |   | 0  |   |    | | 0  || 1  | |    |   | 0  |   |
+ *   |   |    |   |    | |    ||    | |    |   |    |   |
+ *   |   | +  |   |    | | +  || +  | |    |   | +  |   |
+ *   |   +-|--+   |    | +-|--++-|--+ |    |   +-|--+   |
+ *   +-----|------+    +---|-----|----+    +-----|------+
+ *         |               |     |               |       
+ *         +---------------+     +---------------+       
+ *           Ethernet1               Ethernet2            
+ *
+ * Where A, B and C are computers. A is connected to B,
+ * and C is connected to B (and vise versa). Computer B has
+ * 2 NICs and thus has two outgoing cables - one each to computers
+ * A and B. Each NIC is referred to as an 'Interface', and
+ * is typically named in the format ethN where N is
+ * some integer (e.g. eth0, eth1, ...).
+ *
+ * As it stands, when computer A sends an Ethernet packet
+ * on Ethernet1 only computer B can detect it. Similaraly,
+ * if computer C sends an Ethernet packet on Ethernet2 then
+ * only computer B can detect it. But what if computer A wants
+ * to communicate with computer C?
+ *
+ * Write a program which will run on computer B and listen
+ * for any Ethernet packets on it's two network interfaces
+ * eth0 and eth1. Any packet recieved on eth1 should be
+ * re-broadcasted on eth0 and vise-versa. This will allow
+ * hosts A and C to communicate via B.
+ *
+ * Remember your psudocode reference handout!
+ *
+ * Requirements:
+ * - Your program must run continually
+ *
+ * - When forwarding (retransmissing) a packet, you must
+ *   adjust the `FromMac` field to be the MAC address of
+ *   the interface on which you're retransmitting the
+ *   packet. That is, if you are retransmitting a packet
+ *   from eth0 to eth1, then the FromMac of the retransmitted
+ *   packet should be the result of GetMacAddressOfInterface("eth1").
+ *
+ * - You must forward messages from both the eth0 and eth1 interfaces on computer B
+
+// A structure which holds the Ethernet frame related data
+Record structure
+    Frame
+        FromMac
+        ToMac
+        EtherTypeOrLength
+        Payload
+
+Function GetMacAddressOfInterface(Interface)
+    // A function which returns the MAC address of
+    // the given interface.
+    //
+    // Example usage:
+    //
+    // Eth0Mac <- GetMacAddressOfInterface("eth0")
+End Function
+
+Module RecievePacket(Interface, Frame, DidRecievePacket)
+    // Checks if a packet is being recieved on the given
+    // interface. Any recieved packet's frame is assigned to the
+    // out parameter Frame, and a boolean value indicating
+    // if a packet was recieved is assigned to the out
+    // parameter DidRecievePacket.
+    //
+    // Example usage:
+    //
+    // Call RecievePacket("eth0", Eth0Frame, DidEth0HavePacket)
+    // If DidEth0HavePacket Then
+    //      Output("Eth0 Packet's payload was: ", Eth0Frame.Payload)
+    // End If
+End Module
+
+Module SendPacket(Interface, ToMac, FromMac, Payload)
+    // Constructs an ethernet packet with the given payload
+    // and to/from MAC addresses. After constructing the
+    // packet it is sent out from the specified interface.
+    // 
+    // Example usage:
+    // 
+    // Call SendPacket("eth1", "00:15:5D:35:07:6D", "00:82:BF:2F:AB:3E", "Hi friendo")
+End Module
+
+Module Main
+    // TODO implement this module
+End Module
